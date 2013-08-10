@@ -10,7 +10,7 @@ echo "   |   (7)   |   (8)   |   (9)   |"
 echo "   | Record! |  Stop!  |Set Date!|"
 echo "    ----------------------------- "
 echo "   |   (4)   |   (5)   |   (6)   | "
-echo "   |Play last|         |         |"
+echo "   |Play last|         |move data|"
 echo "    ----------------------------- "
 echo "   |   (1)   |   (2)   |   (3)   |"
 echo "   |         |         |Shutdown!|"
@@ -29,6 +29,17 @@ case $chosen in
 
 4)	echo -n "starting playback of last clip";
 	tmux send-keys -t FMP:REC.1 "play /home/pi/last.wv" C-m;
+	;;
+
+6)	clear;
+	echo "mounting /mnt/freigabe";
+	mount /mnt/freigabe
+	echo "moving all audio files..."
+	mv -v /home/pi/*.wv /mnt/freigabe;
+	echo "unmounting /mnt/freigabe";
+	umount /mnt/freigabe
+	echo "press enter to continue";
+	read
 	;;
 
 3)	shutdown -h +2;
