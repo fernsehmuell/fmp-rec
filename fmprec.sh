@@ -4,16 +4,17 @@
 while :
 do
 clear
-echo "********************"
 echo " FMP Recorder 0.0.2 "
 echo "********************"
 echo "* (R)ecord         *"
 echo "* (S)top           *"
 echo "* (P)lay last      *"
 echo "* (Q)uit           *"
+echo "* (I)nfo           *"
+echo "* Set (D)ate+Time  *"
 echo "* (H)alt/Shutdown  *"
 echo "********************"
-echo "Choose (r,s,q): "
+echo "Press button:"
 read -n 1 -s chosen
 case $chosen in
 r) 	echo "RECORD!";
@@ -40,9 +41,17 @@ h)	shutdown -h +2;
 	tmux send-keys -t FMP:REC.1 C-c ;
 	;;
 
+d)	clear;
+	echo "please enter Date";
+	echo "in EXACTLY this format:";
+	echo "MMDDhhmmYYYY";
+	echo "example: 052612592013";
+	read userdate;
+	date $userdate;
+	;;
+
 *) 	echo "ooooops again please (r,s,q)" ;
 	echo "press enter to continue" ;
-	read
 	;;
 esac
 done
