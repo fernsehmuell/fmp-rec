@@ -1,10 +1,25 @@
 #!/bin/bash
 #
+zoomed=0;
+zoom(){
+   tmux new-window -d -n tmux-zoom
+   tmux swap-pane -s tmux-zoom -t FMP:REC.0
+   tmux select-window -t tmux-zoom
+   /home/pi/fmp-rec/font2.sh
+}
+
+unzoom(){
+   tmux swap-pane -s tmux-zoom -t FMP:REC.0
+   tmux select-window -t FMP:REC
+   tmux kill-window -t tmux-zoom
+   /home/pi/fmp-rec/font0.sh
+}
+
 echo "no markers set" > marker.txt
+zoom; zoomed=1;
 
 while :
 do
-
 clear
 echo "    FMP Recorder 0.0.4 - menu 1/2"
 echo "    ----------------------------- "
@@ -12,7 +27,7 @@ echo "   |   (7)   |   (8)   |   (9)   |"
 echo "   | Record! |  Stop!  |play last|"
 echo "    ----------------------------- "
 echo "   |   (4)   |   (5)   |   (6)   | "
-echo "   |         |         |         |"
+echo "   |         |  zoom!  |         |"
 echo "    ----------------------------- "
 echo "   |   (1)   |   (2)   |   (3)   |"
 echo "   | Marker! |         |  Menu2  |"
@@ -34,6 +49,12 @@ case $chosen in
 9)	echo -n "starting playback of last clip";
 	lastfilename=$(cat last.txt).wv
 	tmux send-keys -t FMP:REC.1 "play /home/pi/$lastfilename" C-m;
+	;;
+
+5)	#echo -n "ZOOM";
+	if (($(echo "$zoomed==0" | bc))); then zoom  ; temp=1; fi;
+	if (($(echo "$zoomed==1" | bc))); then unzoom; temp=0; fi;
+	zoomed=$temp;
 	;;
 
 1)	marktime=$(date +%s);
