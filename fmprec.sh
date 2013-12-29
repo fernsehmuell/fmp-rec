@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+setterm -powersafe off -blank 0
 zoomed=0;
 zoom(){
    tmux new-window -d -n tmux-zoom
@@ -34,7 +35,8 @@ echo "   | Marker! |         |  Menu2  |"
 echo "    ----------------------------- "
 read -n 1 -s chosen
 case $chosen in
-7) 	echo -n "starting recording";
+7) 	unzoom; zoomed=0;
+	echo -n "starting recording";
 	start=$(date +%s);
 	marker=0;
 	tmux send-keys -t FMP:REC.1 /home/pi/fmp-rec/start-recorder.sh C-m ;
