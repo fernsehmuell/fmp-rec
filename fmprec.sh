@@ -22,17 +22,17 @@ zoom; zoomed=1;
 while :
 do
 clear
-echo "    FMP Recorder 0.0.4 - menu 1/2"
-echo "    ----------------------------- "
-echo "   |   (7)   |   (8)   |   (9)   |"
-echo "   | Record! |  Stop!  |play last|"
-echo "    ----------------------------- "
-echo "   |   (4)   |   (5)   |   (6)   | "
-echo "   |         |  zoom!  |         |"
-echo "    ----------------------------- "
-echo "   |   (1)   |   (2)   |   (3)   |"
-echo "   | Marker! |         |  Menu2  |"
-echo "    ----------------------------- "
+echo "    FMP Recorder 0.0.5 - menu 1/2"
+echo "   ┌─────────┬─────────┬─────────┐ "
+echo "   │   (7)   │   (8)   │   (9)   │"
+echo "   │ Record! │  Stop!  │play last│"
+echo "   ├─────────┼─────────┼─────────┤"
+echo "   │   (4)   │   (5)   │   (6)   │ "
+echo "   │         │  zoom!  │         │"
+echo "   ├─────────┼─────────┼─────────┤"
+echo "   │   (1)   │   (2)   │   (3)   │"
+echo "   │ Marker! │         │  Menu2  │"
+echo "   └─────────┴─────────┴─────────┘"
 read -n 1 -s chosen
 case $chosen in
 7) 	unzoom; zoomed=0;
@@ -76,17 +76,18 @@ case $chosen in
 3)	while :
 	do
 	clear;
-	echo "    FMP Recorder 0.0.4 - menu 2/2"
-	echo "    ----------------------------- "
-	echo "   |   (7)   |   (8)   |   (9)   |"
-	echo "   |set date!|move data| reboot! |"
-	echo "    ----------------------------- "
-	echo "   |   (4)   |   (5)   |   (6)   | "
-	echo "   |         |         |shutdown!|"
-	echo "    ----------------------------- "
-	echo "   |   (1)   |   (2)   |   (3)   |"
-	echo "   |         |         |  Menu1  |"
-	echo "    ----------------------------- "
+	echo "    FMP Recorder 0.0.5 - menu 2/2"
+	echo "   ┌─────────┬─────────┬─────────┐"
+	echo "   │   (7)   │   (8)   │   (9)   │"
+	echo "   │set date!│move data│ reboot! │"
+	echo "   ├─────────┼─────────┼─────────┤"
+	echo "   │   (4)   │   (5)   │   (6)   │"
+	echo "   │         │         │shutdown!│"
+	echo "   ├─────────┼─────────┼─────────┤"
+	echo "   │   (1)   │   (2)   │   (3)   │"
+	echo "   │         │         │  Menu1  │"
+	echo "   └─────────┴─────────┴─────────┘"
+
 	read -n 1 -s chosen2
 	case $chosen2 in
 		3) echo "3";
