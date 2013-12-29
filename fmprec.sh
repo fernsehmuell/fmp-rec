@@ -31,14 +31,14 @@ if (($(echo "$recording==1" | bc))); then echo -e  '   │ \E[37;41m'"\033[1mRec
 if (($(echo "$recording==0" | bc))); then echo "   │ Record! │  Stop!  │play last│" ; temp=1; fi;
 echo "   ├─────────┼─────────┼─────────┤"
 echo "   │   (4)   │   (5)   │   (6)   │ "
-echo "   │         │  zoom!  │         │"
+echo "   │Marker-- │  zoom!  │         │"
 echo "   ├─────────┼─────────┼─────────┤"
 echo -e '   │   \E[37;41m'"\033[1m(1)\033[0m" '  │   ''\E[37;42m'"\033[1m(2)\033[0m"'   │   (3)   │'
 echo "   │ Marker! │ Marker! │  Menu2  │"
 echo "   └─────────┴─────────┴─────────┘"
 read -n 1 -s chosen
 case $chosen in
--)	echo "letzen Marker löschen... (Baustelle)"
+4)	echo "letzen Marker löschen... (Baustelle)"
 	if (($(echo "$marker>0" | bc))); then 
 		marker=$((marker-1));
 		head -n -1 $markerfile.csv > temp.txt
