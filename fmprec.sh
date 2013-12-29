@@ -2,6 +2,7 @@
 #
 setterm -powersafe off -blank 0
 zoomed=0;
+recording=0;
 zoom(){
    tmux new-window -d -n tmux-zoom
    tmux swap-pane -s tmux-zoom -t FMP:REC.0
@@ -25,7 +26,8 @@ clear
 echo "    FMP Recorder 0.0.5 - menu 1/2"
 echo "   ┌─────────┬─────────┬─────────┐ "
 echo "   │   (7)   │   (8)   │   (9)   │"
-echo "   │ Record! │  Stop!  │play last│"
+if (($(echo "$recording==1" | bc))); then echo -e  '   │ \E[37;41m'"\033[1mRecord!\033[0m │  Stop!  │play last│" ; temp=1; fi; 
+if (($(echo "$recording==0" | bc))); then echo "   │ Record! │  Stop!  │play last│" ; temp=1; fi;
 echo "   ├─────────┼─────────┼─────────┤"
 echo "   │   (4)   │   (5)   │   (6)   │ "
 echo "   │         │  zoom!  │         │"
@@ -36,6 +38,7 @@ echo "   └─────────┴─────────┴──�
 read -n 1 -s chosen
 case $chosen in
 7) 	unzoom; zoomed=0;
+	recording=1;
 	echo -n "starting recording";
 	start=$(date +%s);
 	marker=0;
@@ -45,7 +48,9 @@ case $chosen in
 
 8) 	echo -n "stopping in 2 seconds...";
 	sleep 2;
+	recording=0;
 	tmux send-keys -t FMP:REC.1 C-c ;
+	zoom; zoomed=1;
 	;;
 
 9)	echo -n "starting playback of last clip";
