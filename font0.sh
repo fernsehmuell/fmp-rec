@@ -1,1 +1,1 @@
-setfont /usr/share/consolefonts/Lat15-Terminus20x10.psf.gz
+setfont  /usr/share/consolefonts/Lat15-Fixed16.psf.gz
