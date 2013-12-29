@@ -3,6 +3,7 @@
 setterm -powersafe off -blank 0
 zoomed=0;
 recording=0;
+marker=0;
 zoom(){
    tmux new-window -d -n tmux-zoom
    tmux swap-pane -s tmux-zoom -t FMP:REC.0
@@ -32,11 +33,20 @@ echo "   ├─────────┼─────────┼──�
 echo "   │   (4)   │   (5)   │   (6)   │ "
 echo "   │         │  zoom!  │         │"
 echo "   ├─────────┼─────────┼─────────┤"
-echo -e '   │   (\E[37;41m'"\033[1m1\033[0m"')' '  │   (''\E[37;42m'"\033[1m2\033[0m)"'   │   (3)   │'
+echo -e '   │   \E[37;41m'"\033[1m(1)\033[0m" '  │   ''\E[37;42m'"\033[1m(2)\033[0m"'   │   (3)   │'
 echo "   │ Marker! │ Marker! │  Menu2  │"
 echo "   └─────────┴─────────┴─────────┘"
 read -n 1 -s chosen
 case $chosen in
+-)	echo "letzen Marker löschen... (Baustelle)"
+	if (($(echo "$marker>0" | bc))); then 
+		marker=$((marker-1));
+		head -n -1 $markerfile.csv > temp.txt
+		cp temp.txt $markerfile.csv
+		head -n -1 marker.txt > temp.txt
+		cp temp.txt marker.txt
+	fi;
+	;;
 7) 	unzoom; zoomed=0;
 	recording=1;
 	echo -n "starting recording";
@@ -75,7 +85,7 @@ case $chosen in
 		marker=$((marker+1));
 		echo "M"$marker",,"$markTChhmmss",,,"0000FF >> $markerfile.csv;
 		echo -n "set Marker at TC: "$markTChhmmss;
-		echo "M"$marker": "$markTChhmmss > marker.txt;
+		echo "M"$marker": "$markTChhmmss >> marker.txt;
 	fi;
 	;;
 
@@ -91,7 +101,7 @@ case $chosen in
 		marker=$((marker+1));
 		echo "M"$marker",,"$markTChhmmss",,,"00FF00 >> $markerfile.csv;
 		echo -n "set Marker at TC: "$markTChhmmss;
-		echo "M"$marker": "$markTChhmmss > marker.txt;
+		echo "M"$marker": "$markTChhmmss >> marker.txt;
 	fi;
 	;;
 
