@@ -32,8 +32,9 @@ echo "   ├─────────┼─────────┼──�
 echo "   │   (4)   │   (5)   │   (6)   │ "
 echo "   │         │  zoom!  │         │"
 echo "   ├─────────┼─────────┼─────────┤"
-echo "   │   (1)   │   (2)   │   (3)   │"
-echo "   │ Marker! │         │  Menu2  │"
+echo -e '   │   (\E[37;41m'"\033[1m1\033[0m"')' '  │   (''\E[37;42m'"\033[1m2\033[0m)"'   │   (3)   │'
+#echo -e '   │  (\E[37;41m'"\033[1m0\033[0m",'\E[37;42m'"\033[1m1\033[0m)"'  │   (2)   │   (3)   │'
+echo "   │ Marker! │ Marker! │  Menu2  │"
 echo "   └─────────┴─────────┴─────────┘"
 read -n 1 -s chosen
 case $chosen in
@@ -69,11 +70,25 @@ case $chosen in
 	markTChhmmss=$(date -u -d @$markTCseconds +"%T");
 	markerfile=$(cat last.txt);
 	if (($(echo "$marker==0" | bc)));
-		then echo "#,Name,Start" > $markerfile.csv;
+		then echo "#,Name,Start,End,Length,Color" > $markerfile.csv;
 		echo "no markers set" > marker.txt;
 	fi;
 	marker=$((marker+1));
-	echo "M"$marker",,"$markTChhmmss >> $markerfile.csv;
+	echo "M"$marker",,"$markTChhmmss",,,"0000FF >> $markerfile.csv;
+	echo -n "set Marker at TC: "$markTChhmmss;
+	echo "M"$marker": "$markTChhmmss > marker.txt
+	;;
+
+2)	marktime=$(date +%s);
+	markTCseconds=$(($marktime-$start));
+	markTChhmmss=$(date -u -d @$markTCseconds +"%T");
+	markerfile=$(cat last.txt);
+	if (($(echo "$marker==0" | bc)));
+		then echo "#,Name,Start,End,Length,Color" > $markerfile.csv;
+		echo "no markers set" > marker.txt;
+	fi;
+	marker=$((marker+1));
+	echo "M"$marker",,"$markTChhmmss",,,"00FF00 >> $markerfile.csv;
 	echo -n "set Marker at TC: "$markTChhmmss;
 	echo "M"$marker": "$markTChhmmss > marker.txt
 	;;
