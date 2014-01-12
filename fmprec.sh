@@ -62,8 +62,8 @@ case $chosen in
 	tmux send-keys -t FMP:REC.1 C-c ;
 	zoom; zoomed=1;
 	;;
-
-9)	echo -n "starting playback of last clip";
+9) 	unzoom; zoomed=0;
+	echo -n "starting playback of last clip";
 	lastfilename=$(cat last.txt).wv
 	tmux send-keys -t FMP:REC.1 "play /home/pi/$lastfilename" C-m;
 	;;
